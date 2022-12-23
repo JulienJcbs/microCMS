@@ -43,11 +43,34 @@ function displayAll($db, $parent, $idArticle)
     while ($element = $elements->fetch()) {
         echo $element['type'] . '","' . $element['text'] . '",' . $element['id'] . ',' . $element['idParent'];
         echo '<script>displayElement("' . $element['type'] . '","' . $element['text'] . '",' . $element['id'] . ',"' . $element['idParent'] . '")</script>';
+
+        $attributs = $db->select('attributs', [], ['idElement' => $element['id']], []);
+        while ($attribut = $attributs->fetch()) {
+            echo '<script>setClass(selectElementById("id_' . $attribut['idElement'] . '"), "' . $attribut['value'] . '")</script>';
+        }
+
         $enfants = $db->select('element', [], ['idParent' => $element['id']], []);
         while ($enfant = $enfants->fetch()) {
             echo (displayAll($db, $element['id'], $idArticle));
         }
     }
+}
+
+function addClassName($db, $classMore, $idElement)
+{
+    $attribut = $db->select('attributs', ['id', 'value'], ['idElement' => $idElement, 'name' => 'class'], ['AND'])->fetch();
+    if ($attribut == false) {
+        insertAttribute($db, 'class', $classMore, $idElement);
+    } else {
+        $valeur = $attribut['value'];
+        $valeur .= ' ' . $classMore . ' ';
+        $db->update('attributs', ['value' => $valeur], ['id' => $attribut['id']], []);
+    }
+}
+
+function insertAttribute($db, $name, $value, $idElement)
+{
+    $db->insert('attributs', ['name' => $name, 'value' => $value, 'idElement' => $idElement]);
 }
 
 /**
@@ -77,4 +100,8 @@ if (isset($_POST['remove'])) {
 if (isset($_POST['addElementBtn'])) {
     addElement($db, $_POST['newElement'], $_POST['parent'], $_POST['elementType']);
     header('location: index.php?article=' . $_GET['article']);
+}
+
+if (isset($_POST['centrer'])) {
+    addClassName($db, 'text-center me-auto', $_POST['idElem']);
 }

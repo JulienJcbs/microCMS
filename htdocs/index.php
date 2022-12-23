@@ -103,6 +103,23 @@ if (isset($_GET['article'])) {
                         <button type="submit" name="modifySelect" class="w-100 btnSelect mt-2">Selectionner</button>
                     </form>
                     <hr>
+                    <div class="mt-3">
+                        <?php
+                        if (isset($_POST['modifySelect'])) {
+                        ?>
+                            <div class="row">
+                                <form action="#" method="POST">
+                                    <input type="hidden" name="idElem" value="<?php echo $_POST['elementModif']; ?>">
+                                    <button class="m-1" type="submit" name="centrer">Centrer</button>
+                                    <button class="m-1" type="submit" name="centrer">Centrer</button>
+                                    <button class="m-1" type="submit" name="centrer">Centrer</button>
+                                    <button class="m-1" type="submit" name="centrer">Centrer</button>
+                                </form>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
                 </div>
                 <hr>
                 <div id="fileAction" class="mt-5">
