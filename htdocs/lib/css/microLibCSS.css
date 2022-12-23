@@ -20,12 +20,12 @@ a {
 
 .linkArticle {
     color: rgb(230, 230, 230);
-    font-size: 20px;
+    font-size: 16px;
     text-decoration: none;
 }
 
 label {
-    font-size: 26px;
+    font-size: 18px;
 }
 
 #main {
@@ -65,12 +65,14 @@ label {
     background: rgb(40, 40, 40);
     color: white;
     border-radius: 8px;
+    font-size: 12px;
 }
 
 input {
     background: rgb(40, 40, 40);
     color: white;
     border-radius: 8px;
+    font-size: 12px;
 }
 
 input::placeholder {
@@ -78,13 +80,14 @@ input::placeholder {
 }
 
 button {
-    background: rgb(40, 40, 40);
+    background: rgb(60, 60, 60);
     color: white;
 }
 
 .h1 {
     color: white;
     text-decoration: none;
+    font-size: 20px;
 }
 
 a {
@@ -98,4 +101,16 @@ a {
 
 .btnSelect:hover {
     background: rgb(160, 110, 0);
+}
+
+h3{
+    font-size: 18px;
+}
+
+.articleSelected{
+    color: rgb(0, 120, 0);
+}
+
+button{
+    font-size: 12px;
 }

@@ -93,6 +93,10 @@ if (isset($_POST['remove'])) {
     $idArticle = $db->select('article', ['id'], ['name' => $_GET['article']], [])->fetch()['id'];
     $db->delete('article', ['name' => $_GET['article']], []);
     unlink('articles/' . $_GET['article'] . '.php');
+    $elements = $db->select('element', [], ['idArticle' => $idArticle], []);
+    while ($element = $elements->fetch()) {
+        $db->delete('attributs', ['idElement' => $element['id']], []);
+    }
     $db->delete('element', ['idArticle' => $idArticle], []);
     header('location: index.php');
 }
@@ -123,4 +127,16 @@ if (isset($_POST['diviser'])) {
 
 if (isset($_POST['modifText'])) {
     $db->update('element', ['text' => $_POST['textElement']], ['id' => $_POST['idElem']], []);
+}
+
+if (isset($_POST['moveTo'])) {
+    $db->update('element', ['idParent' => $_POST['whereMove']], ['id' => $_POST['idElem']], []);
+}
+
+if (isset($_POST['tailleOk'])) {
+    addClassName($db, 'col col-' . $_POST['tailleDivision'], $_POST['idElem']);
+}
+
+function displaySelectElement($idElement)
+{
 }
