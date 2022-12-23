@@ -71,6 +71,7 @@ if (isset($_GET['article'])) {
                             Ajouter un élément
                         </label>
                         <input class="mt-3 w-100" placeholder="nom de l'élément" type="text" name="newElement" id="name" required minlength="3">
+                        <input type="text" name="text" class="mt-2 w-100">
                         <select name="elementType" id="typeElement" required class="w-100 mt-2 selectCMS">
                             <option value="" default>Type d'élément</option>
                         </select>
@@ -92,7 +93,8 @@ if (isset($_GET['article'])) {
                 <div class="mt-3 m-2">
                     <form action="#" method="POST">
                         <label for="elementModif">Modifier</label>
-                        <select name="elementModif" class="w-100">
+                        <select name="elementModif" class="w-100 mt-2 selectCMS">
+                            <option value="<?php echo 'main_' . $idArticle; ?>">Corp de page</option>
                             <?php
                             $elements = $db->select('element', [], ['idArticle' => $idArticle], []);
                             while ($element = $elements->fetch()) {
@@ -100,7 +102,7 @@ if (isset($_GET['article'])) {
                             }
                             ?>
                         </select>
-                        <button type="submit" name="modifySelect" class="w-100 btnSelect mt-2">Selectionner</button>
+                        <button type="submit" name="modifySelect" class="w-100 btnSelect mt-2 button">Selectionner</button>
                     </form>
                     <hr>
                     <div class="mt-3">
@@ -110,10 +112,22 @@ if (isset($_GET['article'])) {
                             <div class="row">
                                 <form action="#" method="POST">
                                     <input type="hidden" name="idElem" value="<?php echo $_POST['elementModif']; ?>">
-                                    <button class="m-1" type="submit" name="centrer">Centrer</button>
-                                    <button class="m-1" type="submit" name="centrer">Centrer</button>
-                                    <button class="m-1" type="submit" name="centrer">Centrer</button>
-                                    <button class="m-1" type="submit" name="centrer">Centrer</button>
+                                    <button class="col col-5 m-1 button" type="submit" name="centrer">Centrer</button>
+                                    <button class="col col-5 m-1 button" type="submit" name="addBorder">Bordures</button>
+                                    <button class="col col-5 m-1 button" type="submit" name="centrer">Centrer</button>
+                                    <button class="col col-5 m-1 button removeBtn" type="submit" name="suprElement">Supprimer</button>
+                                    <div class="col col-12">
+                                        <div class="row m-3">
+                                            <input type="text" name="textElement" placeholder="Contenu Text">
+                                            <button class="button col col-12 mt-2" type="submit" name="modifText">Changer le text</button>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="col col-12">
+                                        <div class="row mt-3">
+                                            <button type="submit" name="diviser" class="button col col-12">Diviser</button>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         <?php

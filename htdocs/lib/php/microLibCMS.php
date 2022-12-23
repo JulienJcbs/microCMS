@@ -27,7 +27,7 @@ function addArticleDB($db, $nameArticle)
 function addElement($db, $name, $idParent, $type)
 {
     $idArticle = $db->select('article', ['id'], ['name' => $_GET['article']], [])->fetch()['id'];
-    $db->insert('element', ['name' => $name, 'idArticle' => $idArticle, 'text' => $name, 'idParent' => $idParent, 'type' => $type]);
+    $db->insert('element', ['name' => $name, 'idArticle' => $idArticle, 'text' => $_POST['text'], 'idParent' => $idParent, 'type' => $type]);
 }
 
 function addAttrsElement($db, $idElement, $attrName, $attrValue)
@@ -104,4 +104,23 @@ if (isset($_POST['addElementBtn'])) {
 
 if (isset($_POST['centrer'])) {
     addClassName($db, 'text-center me-auto', $_POST['idElem']);
+    header('location: index.php?article=' . $_GET['article']);
+}
+
+if (isset($_POST['suprElement'])) {
+    $db->delete('element', ['id' => $_POST['idElem']], []);
+    $db->delete('attributs', ['idElement' => $_POST['idElem']], []);
+    header('location: index.php?article=' . $_GET['article']);
+}
+
+if (isset($_POST['addBorder'])) {
+    addClassName($db, 'border border-2', $_POST['idElem']);
+}
+
+if (isset($_POST['diviser'])) {
+    addClassName($db, 'row', $_POST['idElem']);
+}
+
+if (isset($_POST['modifText'])) {
+    $db->update('element', ['text' => $_POST['textElement']], ['id' => $_POST['idElem']], []);
 }
